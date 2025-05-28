@@ -1,0 +1,44 @@
+.menu-icon {
+  font-size: 1.8rem;
+}
+.menu-section {
+  @apply mb-6;
+
+  &-title {
+    @apply text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2 px-2;
+  }
+}
+
+.menu-items {
+  @apply space-y-1;
+}
+
+.menu-item {
+  @apply block px-4 py-3 rounded-lg transition-colors;
+  @apply hover:bg-gray-100 active:bg-gray-200;
+}
+
+.menu-dropdown {
+  details {
+    @apply rounded-lg overflow-hidden;
+  }
+  
+  summary {
+    @apply list-none cursor-pointer;
+  }
+}
+
+.dropdown-content {
+  @apply pl-6 py-2 bg-gray-50;
+  
+  .dropdown-item {
+    @apply block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded;
+  }
+} 
+
+#logo{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+}

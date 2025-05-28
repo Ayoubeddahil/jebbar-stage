@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="00000000000007-user-address" author="codecake">
+    <addColumn tableName="ecommerce_user">
+      <column name="address_street" type="varchar(255)"/>
+      <column name="address_city" type="varchar(255)"/>
+      <column name="address_zip_code" type="varchar(255)"/>
+      <column name="address_country" type="varchar(255)"/>
+    </addColumn>
+  </changeSet>
+
+</databaseChangeLog> 

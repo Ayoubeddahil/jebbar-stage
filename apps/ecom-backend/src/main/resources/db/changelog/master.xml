@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <property name="now" value="current_timestamp" dbms="postgresql"/>
+  <property name="floatType" value="float4" dbms="postgresql"/>
+  <property name="clobType" value="clob" dbms="postgresql"/>
+  <property name="blobType" value="blob" dbms="postgresql"/>
+  <property name="uuidType" value="uuid" dbms="postgresql"/>
+  <property name="datetimeType" value="datetime" dbms="postgresql"/>
+
+  <include file="/db/changelog/00000000000001_user.xml" relativeToChangelogFile="false"/>
+  <include file="/db/changelog/00000000000002_product_category.xml" relativeToChangelogFile="false"/>
+  <include file="/db/changelog/00000000000003_product.xml" relativeToChangelogFile="false"/>
+  <include file="/db/changelog/00000000000004_order.xml" relativeToChangelogFile="false"/>
+  <include file="db/changelog/00000000000006_roles.xml" relativeToChangelogFile="false"/>
+  <include file="db/changelog/00000000000005_user_roles.xml" relativeToChangelogFile="false"/>
+  <include file="db/changelog/00000000000007_user_address.xml" relativeToChangelogFile="false"/>
+  <include file="db/changelog/00000000000008_user_first_name.xml" relativeToChangelogFile="false"/>
+  <include file="db/changelog/00000000000009_user_image_url.xml" relativeToChangelogFile="false"/>
+  <include file="db/changelog/00000000000010_user_last_name.xml" relativeToChangelogFile="false"/>
+  <include file="db/changelog/00000000000011_user_last_seen.xml" relativeToChangelogFile="false"/>
+  <include file="db/changelog/00000000000012_user_public_id.xml" relativeToChangelogFile="false"/>
+  <include file="db/changelog/00000000000013_mark_public_id_executed.xml" relativeToChangelogFile="false"/>
+  <include file="db/changelog/00000000000014_user_authority.xml" relativeToChangelogFile="false"/>
+  <include file="db/changelog/00000000000015_add_authority_name.xml" relativeToChangelogFile="false"/>
+
+</databaseChangeLog>

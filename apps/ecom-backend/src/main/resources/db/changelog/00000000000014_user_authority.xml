@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="00000000000014-user-authority" author="codecake">
+    <createTable tableName="user_authority">
+      <column name="user_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="authority" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+    <addPrimaryKey tableName="user_authority" columnNames="user_id, authority" constraintName="pk_user_authority"/>
+    <addForeignKeyConstraint baseTableName="user_authority" baseColumnNames="user_id"
+                            referencedTableName="ecommerce_user" referencedColumnNames="id"
+                            constraintName="fk_user_authority_user"/>
+  </changeSet>
+
+</databaseChangeLog> 

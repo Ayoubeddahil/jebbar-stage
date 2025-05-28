@@ -1,0 +1,64 @@
+<div class="text-2xl mb-2">Panier d'achat</div>
+<div class="flex flex-col lg:flex-row">
+  <div class="flex-grow me-5 w-full">
+    @if (cartQuery.isSuccess() && this.cart.length !== 0) {
+      @for (item of cart; track item.publicId) {
+        <div class="border-t border-gray-200"></div>
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center mb-4 sm:mb-0">
+            <img [src]="'data:' + item.picture.mimeType + ';base64,' + item.picture.file"
+                 alt="{{item.name}}" width="110px" class="max-w-full lg:max-w-none mb-4 sm:mb-0 sm:me-5" />
+            <div class="w-full sm:w-40">
+              <a [routerLink]="['/product', item.publicId]" class="text-lg font-medium">{{ item.name }}</a>
+              <div class="text-sm text-gray-600">{{ item.brand }}</div>
+              <div class="font-bold text-lg">{{ item.price.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }} MAD</div>
+            </div>
+          </div>
+          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div class="w-32 flex justify-around items-center">
+              <button class="btn btn-sm btn-outline-primary"
+                      (click)="removeQuantityToCart(item.publicId, item.quantity)">-
+              </button>
+              <div>{{ item.quantity }}</div>
+              <button class="btn btn-sm btn-outline-primary"
+                      (click)="addQuantityToCart(item.publicId)">+
+              </button>
+            </div>
+            <button class="btn btn-error btn-outline w-full sm:w-auto"
+                    (click)="removeItem(item.publicId)">
+              Supprimer
+            </button>
+          </div>
+        </div>
+      }
+    } @else if (cartQuery.isPending()) {
+      <div class="flex w-full justify-center">
+        <span class="loading loading-spinner loading-lg"></span>
+      </div>
+    } @else if (checkIfEmptyCart()) {
+      <div class="flex flex-col items-center justify-center h-60">
+        <div class="font-bold text-2xl">Aucun article dans le panier</div>
+        <div>Ajoutez des articles à votre panier</div>
+      </div>
+    }
+  </div>
+  <div class="bg-gray-100 border-gray-400 p-5 w-full lg:w-96 h-72 mt-6 lg:mt-0 rounded-md">
+    <div class="font-bold">Résumé de la commande</div>
+    <div class="border-t border-gray-300 my-5"></div>
+    <div class="flex justify-between">
+      <div>Livraison</div>
+      <div class="text-right">{{ (0).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }} MAD</div>
+    </div>
+    <div class="border-t border-gray-300 my-5"></div>
+    <div class="flex justify-between font-bold">
+      <div>Total</div>
+      <div class="text-right">{{ computeTotal().toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }} MAD</div>
+    </div>
+    <div class="border-t border-gray-300 my-5"></div>
+    <button class="btn btn-primary w-full"
+            [disabled]="cartQuery.isSuccess() && cartQuery.data()!.products.length === 0"
+            (click)="checkout()">
+      {{ labelCheckout }}
+    </button>
+  </div>
+</div>

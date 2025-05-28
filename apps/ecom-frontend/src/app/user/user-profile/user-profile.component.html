@@ -1,0 +1,149 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="max-w-4xl mx-auto">
+    <!-- En-tête -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+      <div class="flex justify-between items-center">
+        <div>
+          <h1 class="text-3xl font-bold text-gray-800">Votre Profil</h1>
+          <p class="text-gray-600 mt-1">Gérez vos informations personnelles et votre sécurité</p>
+        </div>
+      </div>
+    </div>
+
+    @if (user$ | async; as user) {
+      <!-- Informations du profil -->
+      <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800">Informations personnelles</h2>
+        <div class="flex-grow">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="space-y-2">
+              <label class="block text-sm font-medium text-gray-600">Nom d'utilisateur</label>
+              <p class="text-gray-800 font-medium">{{user?.username}}</p>
+            </div>
+
+            <div class="space-y-2">
+              <label class="block text-sm font-medium text-gray-600">Email</label>
+              <p class="text-gray-800">{{user?.email}}</p>
+            </div>
+
+            <div class="space-y-2">
+              <label class="block text-sm font-medium text-gray-600">Rôles</label>
+              <p class="text-gray-800">{{user?.roles?.join(', ')}}</p>
+            </div>
+
+            <!-- Bouton de déconnexion -->
+            <div class="space-y-2">
+              <button
+                (click)="logout()"
+                class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 flex items-center gap-2"
+              >
+                <fa-icon [icon]="faSignOut"></fa-icon>
+                Se déconnecter
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formulaire de modification du mot de passe -->
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800">Modifier votre mot de passe</h2>
+        <form [formGroup]="passwordForm" (ngSubmit)="onSubmit()" class="space-y-4">
+          <!-- Mot de passe actuel -->
+          <div>
+            <label class="block text-sm font-medium text-gray-600 mb-1">
+              Mot de passe actuel
+            </label>
+            <div class="relative">
+              <input
+                [type]="showPassword ? 'text' : 'password'"
+                formControlName="currentPassword"
+                class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                [ngClass]="{'border-red-500': passwordForm.get('currentPassword')?.invalid && passwordForm.get('currentPassword')?.touched}"
+              />
+              <button
+                type="button"
+                (click)="togglePasswordVisibility('current')"
+                class="absolute right-3 top-1/2 transform -translate-y-1/2"
+              >
+                <fa-icon [icon]="showPassword ? faEyeSlash : faEye" class="text-gray-500"></fa-icon>
+              </button>
+            </div>
+          </div>
+
+          <!-- Nouveau mot de passe -->
+          <div>
+            <label class="block text-sm font-medium text-gray-600 mb-1">
+              Nouveau mot de passe
+            </label>
+            <div class="relative">
+              <input
+                [type]="showNewPassword ? 'text' : 'password'"
+                formControlName="newPassword"
+                class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                [ngClass]="{'border-red-500': passwordForm.get('newPassword')?.invalid && passwordForm.get('newPassword')?.touched}"
+              />
+              <button
+                type="button"
+                (click)="togglePasswordVisibility('new')"
+                class="absolute right-3 top-1/2 transform -translate-y-1/2"
+              >
+                <fa-icon [icon]="showNewPassword ? faEyeSlash : faEye" class="text-gray-500"></fa-icon>
+              </button>
+            </div>
+            @if (passwordForm.get('newPassword')?.errors?.['minlength'] && passwordForm.get('newPassword')?.touched) {
+              <p class="text-red-500 text-sm mt-1">Le mot de passe doit contenir au moins 6 caractères</p>
+            }
+          </div>
+
+          <!-- Confirmation du nouveau mot de passe -->
+          <div>
+            <label class="block text-sm font-medium text-gray-600 mb-1">
+              Confirmer le nouveau mot de passe
+            </label>
+            <input
+              type="password"
+              formControlName="confirmPassword"
+              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              [ngClass]="{'border-red-500': passwordForm.hasError('mismatch') && passwordForm.get('confirmPassword')?.touched}"
+            />
+            @if (passwordForm.hasError('mismatch') && passwordForm.get('confirmPassword')?.touched) {
+              <p class="text-red-500 text-sm mt-1">Les mots de passe ne correspondent pas</p>
+            }
+          </div>
+
+          <!-- Messages de succès/erreur -->
+          @if (updateSuccess) {
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative">
+              Mot de passe mis à jour avec succès !
+            </div>
+          }
+          @if (updateError) {
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
+              {{updateError}}
+            </div>
+          }
+
+          <!-- Bouton de soumission -->
+          <div class="flex justify-end">
+            <button
+              type="submit"
+              [disabled]="!passwordForm.valid"
+              class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+            >
+              <fa-icon [icon]="faSave"></fa-icon>
+              Mettre à jour le mot de passe
+            </button>
+          </div>
+        </form>
+      </div>
+    } @else {
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="flex justify-center items-center h-32">
+          <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+          <span class="ml-3 text-gray-600">Chargement du profil...</span>
+        </div>
+      </div>
+    }
+  </div>
+</div>
