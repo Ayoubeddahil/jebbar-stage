@@ -1,34 +1,36 @@
-<div class="w-full flex justify-between items-center">
+<div class="w-full flex justify-between items-center bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md mb-6">
   <div>
-    <h1 class="text-2xl font-bold">Categories</h1>
-    <div>Add and delete categories</div>
+    <h1 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Categories</h1>
+    <div class="text-gray-600 dark:text-gray-300">Add and delete categories</div>
   </div>
-  <button class="btn btn-primary" routerLink="/admin/categories/create">
+  <button class="rounded-md bg-gradient-to-tr from-blue-600 to-blue-700 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-blue-700 focus:shadow-none active:bg-blue-700 hover:bg-blue-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" routerLink="/admin/categories/create">
     Create categories
   </button>
 </div>
-<div class="border-t w-full border-solid border-gray-300 mt-3 mb-5"></div>
+<div class="border-t w-full border-solid border-gray-200 dark:border-gray-700 mt-3 mb-5"></div>
 @if (categoriesQuery.isSuccess() && categoriesQuery.data()!.content.length !== 0) {
-  <div class="overflow-x-auto border border-gray-300 rounded-md">
-    <table class="table table-lg table-zebra">
-      <thead class="border-gray-300">
-      <tr class="border-gray-300">
-        <th></th>
-        <th>Public Id</th>
-        <th>Name</th>
-        <th>Actions</th>
+  <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border-collapse">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+          <th scope="col" class="px-6 py-3 border-b-2 border-gray-200 dark:border-gray-700">#</th>
+          <th scope="col" class="px-6 py-3 border-b-2 border-gray-200 dark:border-gray-700">Public Id</th>
+          <th scope="col" class="px-6 py-3 border-b-2 border-gray-200 dark:border-gray-700">Name</th>
+          <th scope="col" class="px-6 py-3 border-b-2 border-gray-200 dark:border-gray-700">Actions</th>
       </tr>
       </thead>
-      <tbody class="border-0">
+      <tbody>
       @for (category of categoriesQuery.data()!.content; track category.publicId; let i = $index) {
-        <tr class="border-gray-300">
-          <th>{{ i }}</th>
-          <td>{{category.publicId}}</td>
-          <td>{{category.name}}</td>
-          <td>
-            <div (click)="deleteCategory(category.publicId!)" class="btn btn-secondary btn-sm">
+          <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800">
+            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b border-gray-200 dark:border-gray-700">
+              {{ i + 1 }}
+            </th>
+            <td class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">{{category.publicId}}</td>
+            <td class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">{{category.name}}</td>
+            <td class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+              <button (click)="deleteCategory(category.publicId!)" class="font-medium text-red-600 dark:text-red-500 hover:underline">
               Delete
-            </div>
+              </button>
           </td>
         </tr>
       }

@@ -19,21 +19,26 @@ export class CartService {
   addedToCart = this.addedToCart$.asObservable();
 
   constructor() {
-    const cartFromLocalStorage = this.getCartFromLocalStorage();
-    this.addedToCart$.next(cartFromLocalStorage);
+    // Initialize with empty cart
+    this.addedToCart$.next([]);
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem(this.keyCartStorage);
+    }
   }
 
   private getCartFromLocalStorage(): Array<CartItemAdd> {
     if (isPlatformBrowser(this.platformId)) {
       const cartProducts = localStorage.getItem(this.keyCartStorage);
       if (cartProducts) {
-        return JSON.parse(cartProducts) as CartItemAdd[];
-      } else {
-        return [];
+        try {
+          const parsedCart = JSON.parse(cartProducts) as CartItemAdd[];
+          return Array.isArray(parsedCart) ? parsedCart : [];
+        } catch {
+          return [];
+        }
       }
-    } else {
-      return [];
     }
+    return [];
   }
 
   addToCart(publicId: string, command: 'add' | 'remove'): void {
@@ -47,7 +52,7 @@ export class CartService {
         if (productExist) {
           if (command === 'add') {
             productExist.quantity++;
-          } else if (command === 'remove') {
+          } else if (command === 'remove' && productExist.quantity > 1) {
             productExist.quantity--;
           }
         } else {

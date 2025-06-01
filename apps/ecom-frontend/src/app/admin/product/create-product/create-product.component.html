@@ -1,150 +1,175 @@
-<div class="grid grid-cols-3">
-  <div></div>
-  <form id="createForm" (ngSubmit)="create()" [formGroup]="createForm">
-    <h1 class="text-lg font-bold">Create a new Product</h1>
-    <label class="form-control w-full">
-      <div class="label">
-        <span class="label-text">Name</span>
-      </div>
-      <input type="text" placeholder="Type name here"
-             class="input input-bordered w-full" formControlName="name"
-             [class.input-error]="name.invalid && !name.untouched" />
-      <div class="label">
-        <span class="label-text-alt text-red-600"
-              *ngxControlError="name; track:'required'">
+<div class="flex justify-center items-center min-h-screen">
+  <div class="relative flex flex-col rounded-xl bg-transparent w-full max-w-md">
+    <h4 class="block text-xl font-medium text-slate-800 text-center">
+      Create Product
+    </h4>
+    <p class="text-slate-500 font-light text-center">
+      Add a new product to your store.
+    </p>
+    <form id="createForm" (ngSubmit)="create()" [formGroup]="createForm" class="mt-8 mb-2 w-full">
+      <div class="mb-1 flex flex-col gap-6">
+        <!-- Name -->
+        <div class="w-full">
+          <label class="block mb-2 text-sm text-slate-600">Name</label>
+          <input 
+            type="text" 
+            formControlName="name"
+            class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+            placeholder="Type name here"
+            [class.border-red-500]="name.invalid && !name.untouched"
+          />
+          <div *ngxControlError="name; track:'required'" class="mt-1 text-sm text-red-600">
           Name is required
-        </span>
       </div>
-    </label>
-    <label class="form-control w-full">
-      <div class="label">
-        <span class="label-text">Brand</span>
       </div>
-      <input type="text" placeholder="Type brand here"
-             class="input input-bordered w-full" formControlName="brand"
-             [class.input-error]="brand.invalid && !brand.untouched" />
-      <div class="label">
-        <span class="label-text-alt text-red-600"
-              *ngxControlError="brand; track:'required'">
+
+        <!-- Brand -->
+        <div class="w-full">
+          <label class="block mb-2 text-sm text-slate-600">Brand</label>
+          <input 
+            type="text" 
+            formControlName="brand"
+            class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+            placeholder="Type brand here"
+            [class.border-red-500]="brand.invalid && !brand.untouched"
+          />
+          <div *ngxControlError="brand; track:'required'" class="mt-1 text-sm text-red-600">
           Brand is required
-        </span>
       </div>
-    </label>
-    <label class="form-control w-full">
-      <div class="label">
-        <span class="label-text">Color</span>
       </div>
-      <input type="color"
-             class="input input-bordered w-full" formControlName="color"
-             [class.input-error]="color.invalid && !color.untouched" />
-      <div class="label">
-        <span class="label-text-alt text-red-600"
-              *ngxControlError="color; track:'required'">
+
+        <!-- Color -->
+        <div class="w-full">
+          <label class="block mb-2 text-sm text-slate-600">Color</label>
+          <input 
+            type="color" 
+            formControlName="color"
+            class="w-full h-10 bg-transparent border border-slate-200 rounded-md transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+            [class.border-red-500]="color.invalid && !color.untouched"
+          />
+          <div *ngxControlError="color; track:'required'" class="mt-1 text-sm text-red-600">
           Color is required
-        </span>
       </div>
-    </label>
-    <label class="form-control w-full">
-      <div class="label">
-        <span class="label-text">Description</span>
       </div>
-      <textarea placeholder="Type description here"
-                class="textarea textarea-bordered w-full" formControlName="description"
-                [class.input-error]="description.invalid && !description.untouched"> </textarea>
-      <div class="label">
-        <span class="label-text-alt text-red-600"
-              *ngxControlError="description; track:'required'">
+
+        <!-- Description -->
+        <div class="w-full">
+          <label class="block mb-2 text-sm text-slate-600">Description</label>
+          <textarea 
+            formControlName="description"
+            class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+            placeholder="Type description here"
+            [class.border-red-500]="description.invalid && !description.untouched"
+          ></textarea>
+          <div *ngxControlError="description; track:'required'" class="mt-1 text-sm text-red-600">
           Description is required
-        </span>
       </div>
-    </label>
-    <label class="form-control w-full">
-      <div class="label">
-        <span class="label-text">Price</span>
       </div>
-      <input type="number" placeholder="Type price here"
-             class="input input-bordered w-full" formControlName="price"
-             [class.input-error]="price.invalid && !price.untouched" />
-      <div class="label">
-        <span class="label-text-alt text-red-600"
-              *ngxControlError="price; track:'required'">
-          Brand is required
-        </span>
+
+        <!-- Price -->
+        <div class="w-full">
+          <label class="block mb-2 text-sm text-slate-600">Price</label>
+          <input 
+            type="number" 
+            formControlName="price"
+            class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+            placeholder="Type price here"
+            [class.border-red-500]="price.invalid && !price.untouched"
+          />
+          <div *ngxControlError="price; track:'required'" class="mt-1 text-sm text-red-600">
+            Price is required
       </div>
-    </label>
-    <label class="form-control w-full">
-      <div class="label">
-        <span class="label-text">Number of stock</span>
       </div>
-      <input type="number" placeholder="Enter the stock here"
-             class="input input-bordered w-full" formControlName="stock"
-             [class.input-error]="stock.invalid && !stock.untouched" />
-      <div class="label">
-        <span class="label-text-alt text-red-600"
-              *ngxControlError="stock; track:'required'">
+
+        <!-- Stock -->
+        <div class="w-full">
+          <label class="block mb-2 text-sm text-slate-600">Number of stock</label>
+          <input 
+            type="number" 
+            formControlName="stock"
+            class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+            placeholder="Enter the stock here"
+            [class.border-red-500]="stock.invalid && !stock.untouched"
+          />
+          <div *ngxControlError="stock; track:'required'" class="mt-1 text-sm text-red-600">
           Stock is required
-        </span>
       </div>
-    </label>
-    <label class="form-control w-full">
-      <div class="label">
-        <span class="label-text">Technologies intégrées</span>
       </div>
-      <select class="select select-bordered w-full" formControlName="size">
+
+        <!-- Size -->
+        <div class="w-full">
+          <label class="block mb-2 text-sm text-slate-600">Technologies intégrées</label>
+          <select 
+            formControlName="size"
+            class="w-full bg-transparent text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+          >
         <option disabled selected>Select size</option>
         @for (size of sizes; track size) {
           <option value="{{size}}">{{ size }}</option>
         }
       </select>
-      <div class="label"></div>
-    </label>
-    <label class="form-control w-full">
-      <div class="label">
-        <span class="label-text">Category</span>
       </div>
-      <select class="select select-bordered w-full" formControlName="category">
-        <option disabled selected>Select size</option>
+
+        <!-- Category -->
+        <div class="w-full">
+          <label class="block mb-2 text-sm text-slate-600">Category</label>
+          <select 
+            formControlName="category"
+            class="w-full bg-transparent text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+          >
+            <option disabled selected>Select category</option>
         @if (categoriesQuery.isSuccess()) {
           @for (category of categoriesQuery.data()!.content; track category.publicId) {
             <option value="{{category.publicId}}+{{category.name}}">{{ category.name }}</option>
           }
         }
       </select>
-      <div class="label"></div>
-    </label>
-    <label class="form-control w-full">
-      <div class="label">
-        <span class="label-text">Pictures</span>
       </div>
-      <input type="file"
-             class="file-input w-full" multiple formControlName="pictures"
+
+        <!-- Pictures -->
+        <div class="w-full">
+          <label class="block mb-2 text-sm text-slate-600">Pictures</label>
+          <input 
+            type="file"
+            multiple 
+            formControlName="pictures"
              (change)="onUploadNewPicture($event.target)"
-             [class.input-error]="brand.invalid && !brand.untouched" />
-      <div class="label">
+            class="w-full bg-transparent text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+            [class.border-red-500]="pictures.invalid && !pictures.untouched"
+          />
         @if (productPictures.length === 0 && pictures.invalid && !pictures.untouched) {
-          <span class="label-text-alt text-red-600">
+            <div class="mt-1 text-sm text-red-600">
           At least one picture is required
-        </span>
+            </div>
         }
       </div>
+
+        <!-- Featured -->
+        <div class="w-full">
+          <label class="flex items-center gap-2 text-sm text-slate-600">
+            <input 
+              type="checkbox" 
+              checked="checked" 
+              formControlName="featured"
+              class="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500"
+            >
+            Featured
     </label>
-    <div class="form-control w-full">
-      <label class="label cursor-pointer">
-        <span class="label-text">Featured</span>
-      </label>
-      <div class="flex justify-center">
-        <input type="checkbox" checked="checked" class="checkbox checkbox-primary"
-        formControlName="featured">
+        </div>
       </div>
-      <div class="label"></div>
-    </div>
-    <button type="submit" class="btn btn-primary btn-wide w-full"
-    [disabled]="createForm.invalid">
+
+      <button 
+        type="submit" 
+        class="mt-4 w-full rounded-md py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:shadow-none active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        [class.bg-blue-600]="!createForm.invalid"
+        [class.bg-blue-400]="createForm.invalid"
+        [disabled]="createForm.invalid"
+      >
       @if(loading) {
-        <span class="loading-spinner loading"></span>
+          <span class="loading loading-spinner"></span>
       }
       Create product
     </button>
   </form>
-  <div></div>
+  </div>
 </div>

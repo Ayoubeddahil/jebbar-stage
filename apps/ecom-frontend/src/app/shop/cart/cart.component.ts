@@ -11,11 +11,12 @@ import {
 import { lastValueFrom } from 'rxjs';
 import { RouterLink, Router } from '@angular/router';
 import { StripeService } from 'ngx-stripe';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'ecom-cart',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, FontAwesomeModule],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss',
 })

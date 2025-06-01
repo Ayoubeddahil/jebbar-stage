@@ -1,61 +1,77 @@
-<footer class="footer bg-secondary border-2 border-t text-base-content p-10">
+<footer class="bg-gradient-to-r from-slate-800 to-slate-900 text-white">
+  <!-- Première section -->
+  <div class="container mx-auto px-6 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
   <!-- Section Aide -->
-  <nav>
-    <h6 class="footer-title">Aide</h6>
-    <a href="#" class="link link-hover">Livraison</a>
-    <a href="#" class="link link-hover">Retours et Échanges</a>
-    <a href="#" class="link link-hover">FAQ</a>
-    <a href="#" class="link link-hover">Comparer</a>
+      <nav class="space-y-4">
+        <h6 class="text-lg font-semibold mb-4 text-blue-400">Aide</h6>
+        <div class="space-y-2">
+          <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-300">Livraison</a>
+          <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-300">Retours et Échanges</a>
+          <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-300">FAQ</a>
+          <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-300">Comparer</a>
+        </div>
   </nav>
 
   <!-- Section Entreprise -->
-  <nav>
-    <h6 class="footer-title">Entreprise</h6>
-    <a href="#" class="link link-hover">À propos de nous</a>
-    <a href="#" class="link link-hover">Contact</a>
-    <a href="#" class="link link-hover">Carrières</a>
-    <a href="#" class="link link-hover">Kit médias</a>
+      <nav class="space-y-4">
+        <h6 class="text-lg font-semibold mb-4 text-blue-400">Entreprise</h6>
+        <div class="space-y-2">
+          <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-300">À propos de nous</a>
+          <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-300">Contact</a>
+          <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-300">Carrières</a>
+          <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-300">Kit médias</a>
+        </div>
   </nav>
 
   <!-- Section Légal -->
-  <nav>
-    <h6 class="footer-title">Légal</h6>
-    <a href="#" class="link link-hover">Conditions d'utilisation</a>
-    <a href="#" class="link link-hover">Politique de confidentialité</a>
-    <a href="#" class="link link-hover">Politique des cookies</a>
+      <nav class="space-y-4">
+        <h6 class="text-lg font-semibold mb-4 text-blue-400">Légal</h6>
+        <div class="space-y-2">
+          <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-300">Conditions d'utilisation</a>
+          <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-300">Politique de confidentialité</a>
+          <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-300">Politique des cookies</a>
+        </div>
   </nav>
 
   <!-- Section Contact -->
-  <nav>
-    <h6 class="footer-title">Contact</h6>
-    <p class="link link-hover">Adresse : 2 Mars, Casablanca</p>
-    <p class="link link-hover">Téléphone : +212 5 22 11 34 89</p>
-    <p class="link link-hover">Téléphone : +212 5 90 55 32 01</p>
-    <p class="link link-hover">Email : contact&#64;robotica.ma</p> <!-- Correction ici -->
-    <p class="link link-hover">Email : roboticaM&#64;gmail.com</p> <!-- Correction ici -->
+      <nav class="space-y-4">
+        <h6 class="text-lg font-semibold mb-4 text-blue-400">Contact</h6>
+        <div class="space-y-2">
+          <p class="text-gray-300">Adresse : 2 Mars, Casablanca</p>
+          <p class="text-gray-300">Téléphone : +212 5 22 11 34 89</p>
+          <p class="text-gray-300">Téléphone : +212 5 90 55 32 01</p>
+          <p class="text-gray-300">Email : contact&#64;robotica.ma</p>
+          <p class="text-gray-300">Email : roboticaM&#64;gmail.com</p>
+        </div>
   </nav>
-</footer>
+    </div>
+  </div>
 
-<footer class="footer bg-secondary text-base-content px-10 py-4">
-  <aside class="grid-flow-col items-center">
-    <fa-icon class="pe-3" [icon]="['fas', 'truck-fast']" size="3x"></fa-icon>
-    <p>
-      ROBOTICA Maroc
-      <br/>
-      Solutions innovantes en robotique et technologie
-    </p>
-  </aside>
-  <nav class="md:place-self-center md:justify-self-end">
-    <div class="grid grid-flow-col gap-4">
-      <a href="#" aria-label="Twitter Robotica Maroc">
+  <!-- Deuxième section -->
+  <div class="bg-slate-900 border-t border-slate-700">
+    <div class="container mx-auto px-6 py-6">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="flex items-center space-x-4 mb-4 md:mb-0">
+          <fa-icon class="text-blue-400" [icon]="['fas', 'truck-fast']" size="2x"></fa-icon>
+          <div>
+            <p class="text-lg font-semibold text-white">ROBOTICA Maroc</p>
+            <p class="text-gray-400">Solutions innovantes en robotique et technologie</p>
+          </div>
+        </div>
+        
+        <nav class="flex space-x-6">
+          <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300" aria-label="Twitter Robotica Maroc">
         <fa-icon [icon]="['fab', 'twitter']" size="2x"></fa-icon>
       </a>
-      <a href="#" aria-label="YouTube Robotica Maroc">
+          <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300" aria-label="YouTube Robotica Maroc">
         <fa-icon [icon]="['fab', 'youtube']" size="2x"></fa-icon>
       </a>
-      <a href="#" aria-label="Facebook Robotica Maroc">
+          <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300" aria-label="Facebook Robotica Maroc">
         <fa-icon [icon]="['fab', 'facebook']" size="2x"></fa-icon>
       </a>
+        </nav>
+      </div>
     </div>
-  </nav>
+  </div>
 </footer>

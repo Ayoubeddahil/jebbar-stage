@@ -1,5 +1,5 @@
-<div class="grid grid-cols-[1fr_6fr] gap-5">
-  <div class="ms-5">
+<div class="flex flex-col lg:grid lg:grid-cols-[1fr_6fr] gap-5">
+  <div class="w-full lg:w-auto lg:ms-5">
     <ecom-products-filter [sort]="sort()!" [size]="size()!" (productFilter)="onFilterChange($event)"></ecom-products-filter>
   </div>
   @if(filteredProductsQuery.isSuccess() && filteredProductsQuery.data().content.length !== 0) {

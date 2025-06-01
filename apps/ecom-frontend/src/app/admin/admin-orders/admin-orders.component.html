@@ -1,34 +1,46 @@
-<div class="w-full flex justify-between items-center">
+<div class="w-full flex justify-between items-center bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md mb-6">
   <div>
-    <h1 class="text-2xl font-bold">Your orders</h1>
-    <div>Here's the list of your orders</div>
+    <h1 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Orders</h1>
+    <div class="text-gray-600 dark:text-gray-300">Manage and track customer orders</div>
   </div>
 </div>
-<div class="border-t w-full border-solid border-gray-300 mt-2 mb-5"></div>
+<div class="border-t w-full border-solid border-gray-200 dark:border-gray-700 mt-3 mb-5"></div>
 @if(ordersAdminQuery.isSuccess() && ordersAdminQuery.data().numberOfElements !== 0) {
-  <div class="overflow-x-auto border border-gray-300 rounded-md">
-    <table class="table table-lg table-zebra">
-      <thead class="border-gray-300">
-      <tr class="border-gray-300">
-        <th></th>
-        <th>Products</th>
-        <th>Email</th>
-        <th>Address</th>
-        <th>Status</th>
-        <th>Nb of items</th>
-        <th>Total amount</th>
+  <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+          <th scope="col" class="px-6 py-3">#</th>
+          <th scope="col" class="px-6 py-3">Products</th>
+          <th scope="col" class="px-6 py-3">Email</th>
+          <th scope="col" class="px-6 py-3">Address</th>
+          <th scope="col" class="px-6 py-3">Status</th>
+          <th scope="col" class="px-6 py-3">Items</th>
+          <th scope="col" class="px-6 py-3">Total</th>
       </tr>
       </thead>
-      <tbody class="border-0">
+      <tbody>
         @for(order of ordersAdminQuery.data().content!; track order.publicId; let i = $index) {
-          <tr class="border-t-1 border-gray-300">
-            <th>{{i}}</th>
-            <td>{{computeItemsName(order.orderedItems)}}</td>
-            <td>{{order.email}}</td>
-            <td>{{order.address}}</td>
-            <td>{{order.status}}</td>
-            <td>{{computeItemsQuantity(order.orderedItems)}}</td>
-            <td>{{computeTotal(order.orderedItems) | currency}}</td>
+          <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200">
+            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+              {{i + 1}}
+            </th>
+            <td class="px-6 py-4 max-w-40 overflow-ellipsis whitespace-nowrap overflow-hidden">
+              {{computeItemsName(order.orderedItems)}}
+            </td>
+            <td class="px-6 py-4">{{order.email}}</td>
+            <td class="px-6 py-4 max-w-40 overflow-ellipsis whitespace-nowrap overflow-hidden">{{order.address}}</td>
+            <td class="px-6 py-4">
+              <span class="px-3 py-1 text-xs font-medium rounded-full"
+                [ngClass]="{
+                  'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300': order.status === 'PAID',
+                  'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300': order.status === 'PENDING'
+                }">
+                {{order.status}}
+              </span>
+            </td>
+            <td class="px-6 py-4">{{computeItemsQuantity(order.orderedItems)}}</td>
+            <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">{{computeTotal(order.orderedItems) | currency}}</td>
           </tr>
         }
       </tbody>
@@ -39,9 +51,9 @@
     <span class="loading loading-spinner loading-lg"></span>
   </div>
 } @else if (ordersAdminQuery.data()?.numberOfElements === 0) {
-  <div class="alert alert-info">
+  <div role="alert" class="alert alert-info">
     <fa-icon [icon]="['fas', 'circle-exclamation']" size="2x"></fa-icon>
-    <span>No order created yet.</span>
+    <span>No orders created yet.</span>
   </div>
 } @else if (ordersAdminQuery.isError() && checkIfPlatformBrowser()) {
   <div class="alert alert-error">
