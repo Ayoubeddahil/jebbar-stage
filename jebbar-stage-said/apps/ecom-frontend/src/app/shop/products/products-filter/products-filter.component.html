@@ -1,0 +1,43 @@
+<div class="bg-white rounded-lg shadow-md p-4 lg:p-6 lg:sticky lg:top-24 w-full">
+  <form [formGroup]="formFilterProducts">
+    <div class="space-y-4 lg:space-y-6">
+      <!-- Technologies Section -->
+      <div>
+        <h3 class="text-base font-semibold text-gray-900 mb-3 lg:mb-4">Technologies</h3>
+        <form [formGroup]="getSizeFormGroup()" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-2 lg:gap-3">
+          @for(size of sizes; track size) {
+            <label class="flex items-center space-x-2 lg:space-x-3 p-2 rounded-lg cursor-pointer">
+              <input type="checkbox" 
+                     class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                     formControlName="{{size}}"/>
+              <span class="text-sm text-gray-700">{{size}}</span>
+            </label>
+          }
+        </form>
+      </div>
+
+      <!-- Tri Section -->
+      <div>
+        <h3 class="text-base font-semibold text-gray-900 mb-3 lg:mb-4">Trié par</h3>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-2 lg:gap-3">
+          <label class="flex items-center space-x-2 lg:space-x-3 p-2 rounded-lg cursor-pointer">
+            <input type="radio" 
+                   name="sort" 
+                   value="asc" 
+                   class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                   formControlName="sort"/>
+            <span class="text-sm text-gray-700">Le plus ancien</span>
+          </label>
+          <label class="flex items-center space-x-2 lg:space-x-3 p-2 rounded-lg cursor-pointer">
+            <input type="radio" 
+                   name="sort" 
+                   value="desc" 
+                   class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                   formControlName="sort"/>
+            <span class="text-sm text-gray-700">Nouveau</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

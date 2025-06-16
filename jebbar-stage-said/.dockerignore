@@ -1,0 +1,25 @@
+# Version control
+.git
+.gitignore
+
+# Build outputs
+target/
+dist/
+node_modules/
+
+# IDE files
+.idea/
+.vscode/
+*.iml
+
+# Environment files
+.env
+.env.*
+
+# Logs
+*.log
+logs/
+
+# System files
+.DS_Store
+Thumbs.db 

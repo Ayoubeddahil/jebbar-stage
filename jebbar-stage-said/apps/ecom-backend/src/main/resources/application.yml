@@ -1,0 +1,80 @@
+logging:
+  level:
+    ROOT: INFO
+    org.hibernate.SQL: INFO
+    fr.codecake.ecom: INFO
+
+spring:
+  application:
+    name: Ecommerce Backend
+  threads:
+    virtual:
+      enabled: true
+  datasource:
+    hikari:
+      poolName: Hikari
+      auto-commit: false
+    driver-class-name: org.postgresql.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+  data:
+    jpa:
+      repositories:
+        bootstrap-mode: deferred
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+          batch_size: 25
+        query:
+          fail_on_pagination_over_collection_fetch: true
+          in_clause_parameter_padding: true
+        generate_statistics: false
+        order_updates: true
+        connection:
+          provider_disables_autocommit: true
+        order_inserts: true
+        default_schema: ecommerce_yt
+    hibernate:
+      ddl-auto: validate
+      naming:
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+    open-in-view: false
+  liquibase:
+    change-log: classpath:db/changelog/master.xml
+    default-schema: ecommerce_yt
+    contexts: dev
+    #drop-first: true
+  devtools:
+    restart:
+      enabled: false
+    livereload:
+      enabled: false
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+server:
+  port: 8080
+
+application:
+  client-base-url: http://localhost:8081
+  cors:
+    allowed-origins: http://localhost:8081,http://localhost:4200
+    allowed-methods: "*"
+    allowed-headers: "*"
+    exposed-headers: "*"
+    allow-credentials: true
+    max-age: 300
+  stripe:
+    api-key: ${sk_test_51ROQwP2cFrEOmMlPzmMX4ZgHHqcAQSOtAo4coZLbBuJLvevHF8yTya9v0zTorXZcGpckgi1lqgOfIKhMYF2aBaF100OoP3iYI9}
+    webhook-secret: ${STRIPE_WEBHOOK_SECRET}
+
+# JWT Configuration
+app:
+  jwt:
+    secret: ${JWT_SECRET:8Zz5tw0Ionm3XPZZfN0NOml3z9FMfmpgXwovR9fp6ryDIoGRM8JPmBk9xJhSKWVQC6vR1cXWb1yWXhLt4NSQ==}
+    expiration: ${JWT_EXPIRATION:86400000} # 24 hours in milliseconds

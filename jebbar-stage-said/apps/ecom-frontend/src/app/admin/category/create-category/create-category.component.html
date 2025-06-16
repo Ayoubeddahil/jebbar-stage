@@ -1,0 +1,41 @@
+<div class="flex justify-center items-center py-8">
+  <div class="relative flex flex-col rounded-xl bg-transparent w-full max-w-md">
+    <h4 class="block text-xl font-medium text-slate-800 text-center">
+      Create Category
+    </h4>
+    <p class="text-slate-500 font-light text-center">
+      Add a new category to your store.
+    </p>
+    <form id="createForm" (ngSubmit)="create()" [formGroup]="createForm" class="mt-6 mb-2 w-full">
+      <div class="mb-1 flex flex-col gap-6">
+        <div class="w-full">
+          <label class="block mb-2 text-sm text-slate-600">
+            Category Name
+          </label>
+          <input 
+            type="text" 
+            formControlName="name"
+            class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+            placeholder="Type name here"
+            [class.border-red-500]="name.invalid && !name.untouched"
+          />
+          <div *ngxControlError="name; track: 'required'" class="mt-1 text-sm text-red-600">
+            Name is required
+          </div>
+      </div>
+      </div>
+      <button 
+        type="submit" 
+        class="mt-4 w-full rounded-md py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:shadow-none active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        [class.bg-blue-600]="!createForm.invalid"
+        [class.bg-blue-400]="createForm.invalid"
+        [disabled]="createForm.invalid"
+      >
+      @if(loading) {
+        <span class="loading loading-spinner"></span>
+      }
+      Create category
+    </button>
+  </form>
+  </div>
+</div>

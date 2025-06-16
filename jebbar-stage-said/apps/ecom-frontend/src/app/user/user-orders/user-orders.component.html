@@ -1,0 +1,64 @@
+<div class="w-full flex justify-between items-center bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md mb-6">
+  <div>
+    <h1 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Vos commandes</h1>
+    <div class="text-gray-600 dark:text-gray-300">Consultez l'historique de vos commandes</div>
+  </div>
+</div>
+<div class="border-t w-full border-solid border-gray-200 dark:border-gray-700 mt-3 mb-5"></div>
+
+@if(ordersQuery.isSuccess() && ordersQuery.data().numberOfElements !== 0) {
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+            <th scope="col" class="px-6 py-3">#</th>
+            <th scope="col" class="px-6 py-3">Produits</th>
+            <th scope="col" class="px-6 py-3">Statut</th>
+            <th scope="col" class="px-6 py-3">Nombre d'articles</th>
+            <th scope="col" class="px-6 py-3">Montant total</th>
+      </tr>
+      </thead>
+        <tbody>
+      @for(order of ordersQuery.data().content!; track order.publicId; let i = $index) {
+            <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                {{i + 1}}
+              </th>
+              <td class="px-6 py-4 max-w-40 overflow-ellipsis whitespace-nowrap overflow-hidden">
+                {{computeItemsName(order.orderedItems)}}
+              </td>
+              <td class="px-6 py-4">
+                <span class="px-3 py-1 text-xs font-medium rounded-full"
+                  [ngClass]="{
+                    'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300': order.status === 'PAID',
+                    'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300': order.status === 'PENDING'
+                  }">
+                  {{order.status}}
+                </span>
+              </td>
+              <td class="px-6 py-4">{{computeItemsQuantity(order.orderedItems)}}</td>
+              <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">{{computeTotal(order.orderedItems) | currency}}</td>
+        </tr>
+      }
+      </tbody>
+    </table>
+    </div>
+  </div>
+} @else if (ordersQuery.isPending()) {
+  <div class="flex w-full justify-center p-8">
+    <span class="loading loading-spinner loading-lg"></span>
+  </div>
+} @else if (ordersQuery.data()?.numberOfElements === 0) {
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 text-center">
+    <fa-icon [icon]="['fas', 'shopping-bag']" class="text-4xl text-gray-400 mb-4"></fa-icon>
+    <div class="font-bold text-xl text-gray-800 dark:text-white mb-2">Aucune commande</div>
+    <div class="text-gray-600 dark:text-gray-400">Vous n'avez pas encore passé de commande</div>
+  </div>
+} @else if (ordersQuery.isError() && checkIfPlatformBrowser()) {
+  <div class="bg-red-50 dark:bg-red-900/50 rounded-lg shadow-md p-6 text-center">
+    <fa-icon [icon]="['fas', 'exclamation-circle']" class="text-4xl text-red-500 mb-4"></fa-icon>
+    <div class="font-bold text-xl text-red-800 dark:text-red-200 mb-2">Erreur</div>
+    <div class="text-red-600 dark:text-red-300">Impossible de charger vos commandes</div>
+  </div>
+}

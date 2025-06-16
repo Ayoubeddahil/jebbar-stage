@@ -1,0 +1,167 @@
+<div class="relative w-screen h-screen overflow-hidden">
+  <div class="carousel">
+    @for (slide of carouselSlides; track slide.id) {
+      <div class="carousel-item" [class.opacity-100]="currentSlide === slide.id" [class.opacity-0]="currentSlide !== slide.id">
+        <img [src]="slide.image" [alt]="slide.title" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent flex items-center">
+          <div class="w-full px-4">
+          <div class="max-w-2xl text-white animate-fadeInLeft">
+              <h1 class="text-4xl md:text-6xl font-bold mb-4">{{ slide.title }}</h1>
+              <p class="text-xl md:text-2xl mb-8">{{ slide.description }}</p>
+              <button (click)="navigateToFirstCategory()" class="btn btn-primary text-white text-lg px-8 py-4 hover:scale-105 transition-transform duration-300">
+                {{ slide.buttonText }}
+              </button>
+    </div>
+          </div>
+        </div>
+      </div>
+    }
+    </div>
+    
+  <!-- Navigation Arrows -->
+  <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2 z-20">
+    <button (click)="prevSlide()" class="w-12 h-12 flex items-center justify-center bg-black/30 hover:bg-black/50 text-white rounded-full transition-all duration-300">
+      <fa-icon [icon]="faChevronLeft" size="lg"></fa-icon>
+            </button>
+    <button (click)="nextSlide()" class="w-12 h-12 flex items-center justify-center bg-black/30 hover:bg-black/50 text-white rounded-full transition-all duration-300">
+      <fa-icon [icon]="faChevronRight" size="lg"></fa-icon>
+            </button>
+  </div>
+  
+  <!-- Navigation Dots -->
+  <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
+    @for (slide of carouselSlides; track slide.id) {
+      <button (click)="currentSlide = slide.id" 
+              class="w-4 h-4 rounded-full cursor-pointer transition-all duration-300"
+              [ngClass]="{'bg-white': currentSlide === slide.id, 'bg-white/50': currentSlide !== slide.id}">
+      </button>
+    }
+  </div>
+</div>
+
+<!-- Section Innovation -->
+<div class="py-20 bg-white transform transition-all duration-1000 hover:scale-[1.02]">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div class="space-y-8 animate-fadeInLeft">
+        <h2 class="text-4xl font-bold text-gray-900">
+          Innovation & Excellence
+          <div class="mt-4 h-1 w-24 bg-primary rounded-full"></div>
+        </h2>
+        <p class="text-xl text-gray-600">
+          Découvrez comment notre expertise en robotique transforme l'industrie marocaine avec des solutions innovantes et sur mesure.
+        </p>
+        <div class="grid grid-cols-2 gap-6">
+          <div class="p-6 bg-gray-50 rounded-xl transition-all duration-500 hover:shadow-lg hover:scale-105 hover:bg-primary hover:text-white group">
+            <div class="text-4xl font-bold text-primary mb-2 group-hover:text-white">500+</div>
+            <div class="text-gray-600 group-hover:text-white/90">Robots Installés</div>
+          </div>
+          <div class="p-6 bg-gray-50 rounded-xl transition-all duration-500 hover:shadow-lg hover:scale-105 hover:bg-primary hover:text-white group">
+            <div class="text-4xl font-bold text-primary mb-2 group-hover:text-white">98%</div>
+            <div class="text-gray-600 group-hover:text-white/90">Satisfaction Client</div>
+          </div>
+        </div>
+      </div>
+      <div class="relative animate-fadeInRight">
+        <div class="absolute -inset-4 bg-primary/10 rounded-3xl transform rotate-3 transition-all duration-700 hover:rotate-6"></div>
+        <div class="relative bg-white p-8 rounded-3xl shadow-xl overflow-hidden">
+          <img src="./home/face.jpg" alt="Innovation" class="object-cover w-full h-full rounded-2xl transition-transform duration-700 hover:scale-110" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Featured Products Section -->
+<div class="w-full my-10 md:my-20 transform transition-all duration-1000 hover:scale-[1.02]">
+  @if (featuredProductQuery.isSuccess()) {
+    <ecom-featured-product [products]="featuredProducts()"></ecom-featured-product>
+  } @else if (featuredProductQuery.isPending()) {
+    <div class="flex w-full justify-center">
+      <span class="loading loading-spinner loading-lg"></span>
+    </div>
+  } @else if (featuredProductQuery.isError()) {
+    <div class="alert alert-error">
+      <span>Une erreur est survenue lors du chargement des produits. Veuillez réessayer.</span>
+    </div>
+  }
+</div>
+
+<!-- Robot Video Section -->
+<div class="w-full py-20">
+  <div class="container mx-auto px-4">
+    <h2 class="text-4xl font-bold text-center mb-12 animate-fadeInUp">Découvrez notre Robot de Service</h2>
+    <div class="w-full max-w-7xl mx-auto rounded-xl overflow-hidden shadow-2xl transform transition-all duration-1000 hover:scale-[1.02] animate-fadeIn">
+      <video #videoPlayer class="w-full h-[600px] object-cover" autoplay loop muted playsinline>
+        <source src="./home/serving-robot-for-hospital-video.mp4" type="video/mp4">
+        Votre navigateur ne supporte pas la lecture de vidéos.
+      </video>
+    </div>
+  </div>
+</div>
+
+<!-- Section Nos Services -->
+<div class="py-20 bg-gray-50 transform transition-all duration-1000 hover:scale-[1.02]">
+  <div class="container mx-auto px-4">
+    <h2 class="text-4xl font-bold text-center mb-16 text-gray-900 animate-fadeInUp">
+      Nos Services
+      <div class="mx-auto mt-4 h-1 w-24 bg-primary rounded-full animate-scaleX"></div>
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Service 1 - Robots Industriels -->
+      <div class="group relative animate-fadeInUp" style="animation-delay: 0.1s">
+        <div class="absolute -inset-0.5 bg-gradient-to-r from-primary to-primary-focus rounded-2xl blur opacity-30 group-hover:opacity-100 transition duration-1000"></div>
+        <div class="relative bg-white p-8 rounded-2xl h-full transition-all duration-500 hover:shadow-xl hover:-translate-y-2">
+          <div class="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold mb-4 text-gray-900 group-hover:text-primary transition-colors duration-500">Robots Industriels</h3>
+          <p class="text-gray-600 transition-colors duration-500 group-hover:text-gray-800">Robots industriels de haute précision pour l'automatisation de vos processus de production.</p>
+        </div>
+      </div>
+
+      <!-- Service 2 - Robots Collaboratifs -->
+      <div class="group relative animate-fadeInUp" style="animation-delay: 0.2s">
+        <div class="absolute -inset-0.5 bg-gradient-to-r from-primary to-primary-focus rounded-2xl blur opacity-30 group-hover:opacity-100 transition duration-1000"></div>
+        <div class="relative bg-white p-8 rounded-2xl h-full transition-all duration-500 hover:shadow-xl hover:-translate-y-2">
+          <div class="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold mb-4 text-gray-900 group-hover:text-primary transition-colors duration-500">Robots Collaboratifs</h3>
+          <p class="text-gray-600 transition-colors duration-500 group-hover:text-gray-800">Robots collaboratifs sécurisés pour travailler en harmonie avec vos équipes.</p>
+        </div>
+      </div>
+
+      <!-- Service 3 - Maintenance & Support -->
+      <div class="group relative animate-fadeInUp" style="animation-delay: 0.3s">
+        <div class="absolute -inset-0.5 bg-gradient-to-r from-primary to-primary-focus rounded-2xl blur opacity-30 group-hover:opacity-100 transition duration-1000"></div>
+        <div class="relative bg-white p-8 rounded-2xl h-full transition-all duration-500 hover:shadow-xl hover:-translate-y-2">
+          <div class="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold mb-4 text-gray-900 group-hover:text-primary transition-colors duration-500">Maintenance & Support</h3>
+          <p class="text-gray-600 transition-colors duration-500 group-hover:text-gray-800">Service de maintenance préventive et support technique pour vos équipements robotiques.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Section Contact -->
+<div class="py-20 bg-gradient-to-r from-primary to-primary-focus overflow-hidden">
+  <div class="container mx-auto px-4">
+    <div class="max-w-4xl mx-auto text-center text-white">
+      <h2 class="text-4xl font-bold mb-8">Prêt à <span class="text-blue-400">Automatiser</span> Votre Production ?</h2>
+      <p class="text-xl mb-12 opacity-90">Contactez-nous dès aujourd'hui pour découvrir comment nos solutions robotiques peuvent transformer votre entreprise</p>
+      <button (click)="navigateToContact()" class="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-primary bg-white rounded-full hover:bg-gray-100 transition-colors duration-300 shadow-lg">
+        Contactez-nous
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+.navbar {
+  @apply sticky top-0 z-40;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  border-radius: 0;
+  background-color: white;
+  
+  .dropdown-content {
+    @apply shadow-lg;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+  
+  .badge {
+    @apply border-none;
+  }
+  
+  .menu a:hover {
+    @apply bg-transparent;
+  }
+  
+  .text-primary {
+    color: var(--primary-color, #3b82f6);
+  }
+  
+  .hover\:text-primary:hover {
+    color: var(--primary-color, #3b82f6);
+  }
+  
+  .btn-ghost:hover {
+    background-color: #f3f4f6;
+  }
+}
+
+/* Animation pour le menu mobile */
+[type="checkbox"]:checked ~ div {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.btn-ghost {
+  &:hover {
+    background-color: #f3f4f6;
+  }
+}
+
+.mega-menu {
+  border-radius: 0;
+  background-color: white;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}

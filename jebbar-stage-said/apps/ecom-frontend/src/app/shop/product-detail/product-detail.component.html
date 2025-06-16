@@ -1,0 +1,121 @@
+@if (productQuery.isSuccess()) {
+  <div class="flex flex-col lg:flex-row justify-center items-start w-full gap-8 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+    <!-- Product Image -->
+    <div class="lg:w-1/2">
+      <div class="relative overflow-hidden rounded-lg shadow-lg">
+      <img
+        [src]="'data:' + productQuery.data().pictures[0].mimeType + ';base64,' + productQuery.data().pictures[0].file"
+          alt="{{productQuery.data().name}}" 
+          class="w-full h-auto object-cover transition-transform duration-300 hover:scale-105" 
+        />
+        @if (productQuery.data().featured) {
+          <div class="absolute top-4 right-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg">
+            Nouveau produit
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Product Details -->
+    <div class="lg:w-1/2 space-y-6">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-2">
+          {{ productQuery.data().name }}
+        </h1>
+        <div class="text-lg text-gray-600 dark:text-gray-300">
+          {{ productQuery.data().size }}
+        </div>
+      </div>
+
+      <!-- Stock Status -->
+      @if (productQuery.data().nbInStock! > 0) {
+        <div class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">
+          <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+          En stock
+        </div>
+      } @else {
+        <div class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300">
+          <span class="w-2 h-2 bg-red-500 rounded-full mr-2"></span>
+          Rupture de stock
+        </div>
+      }
+
+      <!-- Price -->
+      <div class="flex items-baseline gap-3">
+        <span class="text-3xl font-bold text-gray-900 dark:text-white">
+          {{ productQuery.data().price.toLocaleString('fr-MA') }} Dh
+        </span>
+        <span class="text-lg text-gray-500 line-through">
+          {{ (productQuery.data().price + 200).toLocaleString('fr-MA') }} Dh
+        </span>
+      </div>
+      
+      <!-- Product Info -->
+      <div class="space-y-4">
+        <div class="flex items-center gap-2">
+          <span class="text-gray-600 dark:text-gray-400">Marque:</span>
+          <span class="font-medium text-gray-800 dark:text-white">{{ productQuery.data().brand }}</span>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <span class="text-gray-600 dark:text-gray-400">Couleur:</span>
+          <div class="w-6 h-6 rounded-full shadow-md" [ngStyle]="{'background-color': productQuery.data().color}"></div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <span class="text-gray-600 dark:text-gray-400">Technologie:</span>
+          <span class="font-medium text-gray-800 dark:text-white">{{ productQuery.data().size }}</span>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="border-t border-gray-200 dark:border-gray-700 pt-6">
+        <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-3">Description</h2>
+        <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+          {{ productQuery.data().description }}
+        </p>
+      </div>
+
+      <!-- Add to Cart Button -->
+      <button 
+        class="w-full lg:w-auto px-8 py-3 rounded-md bg-gradient-to-r from-blue-600 to-blue-700 text-white font-medium shadow-md hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              [disabled]="productQuery.data().nbInStock <= 0"
+        (click)="addToCart(productQuery.data()!)"
+      >
+        <fa-icon class="mr-2" [icon]="['fas', iconAddToCart]"></fa-icon>
+        {{ labelAddToCart }}
+      </button>
+    </div>
+  </div>
+}
+
+<!-- Loading State -->
+@else if (productQuery.isPending()) {
+  <div class="flex w-full justify-center items-center min-h-[400px]">
+    <span class="loading loading-spinner loading-lg"></span>
+  </div>
+}
+
+<!-- Related Products -->
+@if (relatedProductQuery.data(); as relatedProducts) {
+  @if (relatedProducts.content.length > 0) {
+    <div class="mt-16 px-4 md:px-8">
+      <div class="max-w-7xl mx-auto">
+        <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-8">Produits Similaires</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          @for (product of relatedProducts.content; track product.publicId) {
+            <div class="flex justify-center">
+              <ecom-product-card [product]="product"></ecom-product-card>
+  </div>
+    }
+  </div>
+</div>
+    </div>
+  } @else {
+    <div class="mt-16 px-4 md:px-8">
+      <div class="max-w-7xl mx-auto text-center py-12 bg-gray-50 rounded-lg">
+        <p class="text-gray-600 dark:text-gray-400 text-lg">Aucun produit similaire disponible</p>
+      </div>
+    </div>
+  }
+}

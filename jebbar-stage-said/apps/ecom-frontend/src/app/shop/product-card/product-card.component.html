@@ -1,0 +1,53 @@
+<a [routerLink]="['/product', product().publicId]" class="block">
+  <div class="group relative bg-white rounded-lg shadow-md overflow-hidden w-72 h-[420px] cursor-pointer transition-all duration-300 hover:shadow-lg">
+    <!-- Badge -->
+    <div class="absolute top-2 right-2 rounded-full bg-slate-100 py-0.5 px-2 text-xs font-medium text-slate-600 transition-all shadow-sm z-10">
+      NOUVEAU
+    </div>
+
+    <!-- Image Container -->
+    <div class="relative h-64 w-full bg-gray-50">
+      <img [src]="'data:' + product().pictures[0].mimeType + ';base64,' + product().pictures[0].file"
+           [alt]="product().name"
+           class="w-full h-full object-cover">
+    </div>
+
+    <!-- Content Area -->
+    <div class="p-4 relative h-[140px] group-hover:opacity-0 transition-opacity duration-300">
+      <h3 class="text-lg font-semibold text-gray-800 mb-1 line-clamp-1">{{product().name}}</h3>
+      <p class="text-sm text-gray-600 line-clamp-1">{{product().brand}} - {{product().size}}</p>
+      <div class="mt-2 flex items-center justify-between">
+        <div>
+          <span class="line-through text-sm text-gray-500 me-2">{{product().price + 200 | number:'1.2-2'}} Dh</span>
+          <span class="text-lg font-semibold text-blue-600">{{product().price | number:'1.2-2'}} Dh</span>
+        </div>
+        <button 
+          (click)="$event.preventDefault(); $event.stopPropagation(); addToCart(product())"
+          class="absolute bottom-4 right-4 bg-blue-600 text-white w-8 h-8 rounded-full hover:bg-blue-700 transition-colors duration-300 z-20 flex items-center justify-center"
+        >
+          <fa-icon [icon]="faPlus" size="sm"></fa-icon>
+        </button>
+      </div>
+    </div>
+
+    <!-- Hover State Overlay -->
+    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+      <div class="w-full">
+        <h3 class="text-lg font-semibold text-white mb-1 line-clamp-1">{{product().name}}</h3>
+        <p class="text-sm text-white/70 line-clamp-1">{{product().brand}} - {{product().size}}</p>
+        <div class="flex items-center justify-between mt-2">
+          <div>
+            <span class="line-through text-sm text-white/70 me-2">{{product().price + 200 | number:'1.2-2'}} Dh</span>
+            <span class="text-lg font-semibold text-white">{{product().price | number:'1.2-2'}} Dh</span>
+          </div>
+          <button 
+            (click)="$event.preventDefault(); $event.stopPropagation(); addToCart(product())"
+            class="bg-white text-blue-600 w-8 h-8 rounded-full hover:bg-blue-50 transition-colors duration-300 flex items-center justify-center"
+          >
+            <fa-icon [icon]="faPlus" size="sm"></fa-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</a>

@@ -1,0 +1,12 @@
+:host {
+  display: block;
+}
+
+// Styles pour masquer la barre de défilement tout en gardant la fonctionnalité
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  &::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari and Opera */
+  }
+} 

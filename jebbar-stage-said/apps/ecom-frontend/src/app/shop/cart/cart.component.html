@@ -1,0 +1,87 @@
+<div class="w-full flex justify-between items-center bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md mb-6">
+  <div>
+    <h1 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Panier d'achat</h1>
+    <div class="text-gray-600 dark:text-gray-300">Gérez vos articles et passez à la caisse</div>
+  </div>
+</div>
+<div class="border-t w-full border-solid border-gray-200 dark:border-gray-700 mt-3 mb-5"></div>
+
+<div class="flex flex-col lg:flex-row gap-6">
+  <div class="flex-grow w-full">
+    @if (cartQuery.isSuccess() && this.cart.length !== 0) {
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+      @for (item of cart; track item.publicId) {
+          <div class="border-b border-gray-200 dark:border-gray-700">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-6">
+              <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-4 sm:mb-0">
+            <img [src]="'data:' + item.picture.mimeType + ';base64,' + item.picture.file"
+                     alt="{{item.name}}" 
+                     class="w-24 h-24 object-cover rounded-lg shadow-sm" />
+                <div>
+                  <a [routerLink]="['/product', item.publicId]" 
+                     class="text-lg font-semibold text-gray-800 dark:text-white hover:text-primary-600 dark:hover:text-primary-400">
+                    {{ item.name }}
+                  </a>
+                  <div class="text-sm text-gray-600 dark:text-gray-400">{{ item.brand }}</div>
+                  <div class="font-bold text-lg text-primary-600 dark:text-primary-400">
+                    {{ item.price.toLocaleString('fr-MA') }} Dh
+                  </div>
+            </div>
+          </div>
+          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <div class="flex items-center gap-2">
+                  <button class="btn btn-sm btn-outline-primary rounded-full w-8 h-8 flex items-center justify-center"
+                          (click)="removeQuantityToCart(item.publicId, item.quantity)">-</button>
+                  <span class="text-gray-700 dark:text-gray-300 font-medium">{{ item.quantity }}</span>
+                  <button class="btn btn-sm btn-outline-primary rounded-full w-8 h-8 flex items-center justify-center"
+                          (click)="addQuantityToCart(item.publicId)">+</button>
+            </div>
+                <button class="btn btn-error btn-outline rounded-full"
+                    (click)="removeItem(item.publicId)">
+                  <fa-icon [icon]="['fas', 'trash']" class="me-2"></fa-icon>
+              Supprimer
+            </button>
+              </div>
+          </div>
+        </div>
+      }
+      </div>
+    } @else if (cartQuery.isPending()) {
+      <div class="flex w-full justify-center p-8">
+        <span class="loading loading-spinner loading-lg"></span>
+      </div>
+    } @else if (checkIfEmptyCart()) {
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 text-center">
+        <fa-icon [icon]="['fas', 'shopping-cart']" class="text-4xl text-gray-400 mb-4"></fa-icon>
+        <div class="font-bold text-xl text-gray-800 dark:text-white mb-2">Aucun article dans le panier</div>
+        <div class="text-gray-600 dark:text-gray-400">Ajoutez des articles à votre panier pour commencer vos achats</div>
+      </div>
+    }
+  </div>
+
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 w-full lg:w-96 h-fit">
+    <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-4">Résumé de la commande</h2>
+    <div class="border-t border-gray-200 dark:border-gray-700 my-4"></div>
+    <div class="flex justify-between text-gray-600 dark:text-gray-400 mb-2">
+      <div>Sous-total</div>
+      <div>{{ computeTotal().toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }} MAD</div>
+    </div>
+    <div class="flex justify-between text-gray-600 dark:text-gray-400 mb-2">
+      <div>Livraison</div>
+      <div>{{ (0).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }} MAD</div>
+    </div>
+    <div class="border-t border-gray-200 dark:border-gray-700 my-4"></div>
+    <div class="flex justify-between font-bold text-lg mb-6">
+      <div class="text-gray-800 dark:text-white">Total</div>
+      <div class="text-primary-600 dark:text-primary-400">
+        {{ computeTotal().toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }} MAD
+      </div>
+    </div>
+    <button class="btn btn-primary w-full rounded-full"
+            [disabled]="cartQuery.isSuccess() && cartQuery.data()!.products.length === 0"
+            (click)="checkout()">
+      <fa-icon [icon]="['fas', 'credit-card']" class="me-2"></fa-icon>
+      {{ labelCheckout }}
+    </button>
+  </div>
+</div>

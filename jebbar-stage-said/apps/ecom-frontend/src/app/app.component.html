@@ -1,0 +1,37 @@
+<div class="absolute z-50 !z-[9999] top-4 right-4" role="alert">
+  @for (toast of toastService.toasts; track toast) {
+    <div role="alert" 
+         class="alert my-4 flex justify-between items-center gap-3 px-6 py-4 rounded-lg shadow-lg transform transition-all duration-300 ease-in-out animate-fade-in"
+         [ngClass]="{
+           'bg-red-50 border-l-4 border-red-500 text-red-700': toast.type === 'ERROR',
+           'bg-green-50 border-l-4 border-green-500 text-green-700': toast.type === 'SUCCESS'
+         }">
+      <div class="flex items-center gap-3">
+        @if(toast.type === 'SUCCESS') {
+          <fa-icon [icon]="['fas', 'check']" class="text-green-500" size="lg"></fa-icon>
+        }
+        <div class="font-medium">{{toast.body}}</div>
+      </div>
+      <button (click)="toastService.remove(toast)" 
+              class="p-1 rounded-full hover:bg-white/50 transition-colors duration-200"
+              [ngClass]="{
+                'text-red-500 hover:text-red-600': toast.type === 'ERROR',
+                'text-green-500 hover:text-green-600': toast.type === 'SUCCESS'
+              }">
+        <fa-icon [icon]="['fas', 'times']" size="sm"></fa-icon>
+      </button>
+    </div>
+  }
+</div>
+
+
+<div class="flex flex-col min-h-screen overflow-x-hidden">
+  @if(shouldShowLayout()) { <ecom-navbar></ecom-navbar> }
+  
+  <div class="grow h-full overflow-x-hidden">
+      <router-outlet></router-outlet>
+  </div>
+  @if(shouldShowLayout()) { <ecom-footer></ecom-footer> }
+</div>
+
+

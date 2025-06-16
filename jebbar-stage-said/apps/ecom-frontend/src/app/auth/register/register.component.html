@@ -1,0 +1,140 @@
+<div class="register-container">
+  <div class="register-box">
+    <h2>Register</h2>
+    
+    <!-- Registration Form -->
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" *ngIf="!showVerification">
+      <!-- Username Field -->
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          id="username"
+          formControlName="username"
+          class="form-control"
+          placeholder="Choose a username (3-20 chars)"
+        />
+        <div class="error-message" *ngIf="registerForm.get('username')?.touched && registerForm.get('username')?.invalid">
+          <div *ngIf="registerForm.get('username')?.errors?.['required']">
+            Username is required
+          </div>
+          <div *ngIf="registerForm.get('username')?.errors?.['minlength']">
+            Minimum 3 characters
+          </div>
+          <div *ngIf="registerForm.get('username')?.errors?.['maxlength']">
+            Maximum 20 characters
+          </div>
+        </div>
+      </div>
+
+      <!-- Email Field -->
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          class="form-control"
+          placeholder="Enter your email"
+        />
+        <div class="error-message" *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid">
+          <div *ngIf="registerForm.get('email')?.errors?.['required']">
+            Email is required
+          </div>
+          <div *ngIf="registerForm.get('email')?.errors?.['email']">
+            Please enter a valid email
+          </div>
+        </div>
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          class="form-control"
+          placeholder="At least 6 chars with letters and numbers"
+        />
+        <div class="error-message" *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid">
+          <div *ngIf="registerForm.get('password')?.errors?.['required']">
+            Password is required
+          </div>
+          <div *ngIf="registerForm.get('password')?.errors?.['minlength']">
+            Minimum 6 characters
+          </div>
+          <div *ngIf="registerForm.get('password')?.errors?.['pattern']">
+            Must contain letters and numbers
+          </div>
+        </div>
+      </div>
+
+      <!-- Server Error -->
+      <div class="error-message" *ngIf="error">
+        {{ error }}
+      </div>
+
+      <!-- Submit Button -->
+      <button 
+        type="submit" 
+        class="btn btn-primary"
+        [disabled]="registerForm.invalid || isLoading"
+      >
+        <span *ngIf="!isLoading">Send Verification Code</span>
+        <span *ngIf="isLoading">Processing...</span>
+      </button>
+    </form>
+
+    <!-- Verification Form -->
+    <form [formGroup]="verificationForm" (ngSubmit)="onVerify()" *ngIf="showVerification">
+      <div class="form-group">
+        <label for="code">Verification Code</label>
+        <input
+          type="text"
+          id="code"
+          formControlName="code"
+          class="form-control"
+          placeholder="Enter the 6-digit code sent to your email"
+        />
+        <div class="error-message" *ngIf="verificationForm.get('code')?.touched && verificationForm.get('code')?.invalid">
+          <div *ngIf="verificationForm.get('code')?.errors?.['required']">
+            Verification code is required
+          </div>
+          <div *ngIf="verificationForm.get('code')?.errors?.['minlength'] || verificationForm.get('code')?.errors?.['maxlength']">
+            Code must be 6 digits
+          </div>
+        </div>
+      </div>
+
+      <!-- Server Error -->
+      <div class="error-message" *ngIf="error">
+        {{ error }}
+      </div>
+
+      <!-- Submit Button -->
+      <button 
+        type="submit" 
+        class="btn btn-primary"
+        [disabled]="verificationForm.invalid || isLoading"
+      >
+        <span *ngIf="!isLoading">Verify & Register</span>
+        <span *ngIf="isLoading">Processing...</span>
+      </button>
+
+      <!-- Resend Code Button -->
+      <button 
+        type="button" 
+        class="btn btn-secondary"
+        (click)="resendCode()"
+        [disabled]="isLoading"
+      >
+        Resend Code
+      </button>
+    </form>
+
+    <div class="login-link">
+      Already have an account? <a routerLink="/login">Login here</a>
+    </div>
+  </div>
+</div>

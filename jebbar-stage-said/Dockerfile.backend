@@ -1,0 +1,24 @@
+# Étape 1 : Builder l'application Java avec Maven
+FROM maven:3.9.6-eclipse-temurin-21 as builder
+
+WORKDIR /app
+
+# Copier le POM et installer les dépendances (cache optimisé)
+COPY apps/ecom-backend/pom.xml .
+RUN mvn dependency:go-offline
+
+# Copier le code source et builder
+COPY apps/ecom-backend/src ./src
+RUN mvn clean package -DskipTests
+
+# Étape 2 : Utiliser une image JRE pour l'exécution
+FROM eclipse-temurin:21-jre-jammy
+
+WORKDIR /app
+
+# Copier le JAR généré
+COPY --from=builder /app/target/*.jar app.jar
+
+EXPOSE 8080
+
+ENTRYPOINT ["java", "-jar", "app.jar"]

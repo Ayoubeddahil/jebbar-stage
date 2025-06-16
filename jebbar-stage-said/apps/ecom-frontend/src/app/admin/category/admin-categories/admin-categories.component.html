@@ -1,0 +1,53 @@
+<div class="w-full flex justify-between items-center bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md mb-6">
+  <div>
+    <h1 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Categories</h1>
+    <div class="text-gray-600 dark:text-gray-300">Add and delete categories</div>
+  </div>
+  <button class="rounded-md bg-gradient-to-tr from-blue-600 to-blue-700 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-blue-700 focus:shadow-none active:bg-blue-700 hover:bg-blue-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" routerLink="/admin/categories/create">
+    Create categories
+  </button>
+</div>
+<div class="border-t w-full border-solid border-gray-200 dark:border-gray-700 mt-3 mb-5"></div>
+@if (categoriesQuery.isSuccess() && categoriesQuery.data()!.content.length !== 0) {
+  <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border-collapse">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+          <th scope="col" class="px-6 py-3 border-b-2 border-gray-200 dark:border-gray-700">#</th>
+          <th scope="col" class="px-6 py-3 border-b-2 border-gray-200 dark:border-gray-700">Public Id</th>
+          <th scope="col" class="px-6 py-3 border-b-2 border-gray-200 dark:border-gray-700">Name</th>
+          <th scope="col" class="px-6 py-3 border-b-2 border-gray-200 dark:border-gray-700">Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      @for (category of categoriesQuery.data()!.content; track category.publicId; let i = $index) {
+          <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800">
+            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b border-gray-200 dark:border-gray-700">
+              {{ i + 1 }}
+            </th>
+            <td class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">{{category.publicId}}</td>
+            <td class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">{{category.name}}</td>
+            <td class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+              <button (click)="deleteCategory(category.publicId!)" class="font-medium text-red-600 dark:text-red-500 hover:underline">
+              Delete
+              </button>
+          </td>
+        </tr>
+      }
+      </tbody>
+    </table>
+  </div>
+} @else if (categoriesQuery.isPending()) {
+  <div class="flex w-full justify-center">
+    <span class="loading loading-spinner loading-lg"></span>
+  </div>
+} @else if (categoriesQuery.isError()) {
+  <div class="alert alert-error">
+    <span>Error! Failed to load categories.</span>
+  </div>
+} @else if(categoriesQuery.data()!.content.length === 0) {
+  <div role="alert" class="alert alert-info">
+    <fa-icon [icon]="['fas', 'circle-exclamation']" size="2x"></fa-icon>
+    <span>No category created yet.</span>
+  </div>
+}
